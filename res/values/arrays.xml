@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="KQStatus">
+        <item>正常</item>
+        <item>缺勤</item>
+    </string-array>
+    <string-array name="KQways">
+        <item>列表</item>
+        <item>个人</item>
+    </string-array>
+    <string-array name="jdtb_action">
+        <item>提交</item>
+        <item>作废</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/kq_order_save"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:icon="@drawable/actionbar_kqsubmit"
+        android:title="@string/tea_kq_save"/>
+
+</menu>

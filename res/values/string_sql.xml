@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="sql_Kqresult_Kstate_absence">正常</string>
+    <string name="sql_Kqresult_Kstate_submit">已提交</string>
+    <string name="sql_Kqresult_Kstate_saved">是</string>
+	<string name="sql_teachprogress_no">未考勤</string>
+</resources>

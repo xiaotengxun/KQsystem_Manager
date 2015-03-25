@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <RelativeLayout
+        android:id="@+id/tab_title"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true" >
+
+        <RadioGroup
+            android:id="@+id/group_tab"
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal" >
+        </RadioGroup>
+
+        <ImageView
+            android:id="@+id/tab_indictor"
+            android:layout_width="0dp"
+            android:layout_height="5dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/tab_scrollbar" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/tab_title" >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/mViewPager"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:background="#ffffff"
+            android:flipInterval="30"
+            android:persistentDrawingCache="animation" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,15 @@
+<resources>
+
+    <color name="color_extra_item">#bdb8b9</color>
+    <color name="kq_order_stu_background_two">#c4bdbf</color>
+    <color name="kq_order_stu_background_one">#e7e4e5</color>
+    <color name="actionBar_selected_bg">#11f637</color>
+    <color name="kq_stu_queqing">#7ffc4b06</color>
+    <color name="kq_stu_chidao">#7f5df70a</color>
+    <color name="color_black">#000000</color>
+    <color name="color_red">#fd3000</color>
+    <color name="color_blue">#4707ff</color>
+    <color name="tab_scrollbar">#4642e3</color>
+    <color name="jdtb_delete_bg">#b7b5b6</color>
+
+</resources>

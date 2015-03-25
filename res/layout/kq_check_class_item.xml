@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingBottom="15dp" >
+
+    <RelativeLayout
+        android:id="@+id/rel1"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp" >
+
+        <TextView
+            android:id="@+id/kq_check_class_stu_name"
+            android:layout_width="100dp"
+            android:layout_height="fill_parent"
+            android:drawableLeft="@drawable/kq_check_class_name"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/kq_check_class_stu_sno"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_toRightOf="@+id/kq_check_class_stu_name"
+            android:drawableLeft="@drawable/kq_check_class_sno"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_black"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/rel1"
+        android:layout_marginTop="10dp" >
+
+        <TextView
+            android:id="@+id/kq_check_class_stu_qingjia"
+            android:layout_width="100dp"
+            android:layout_height="fill_parent"
+            android:drawableLeft="@drawable/kq_check_class_icon_qinjia"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/kq_check_class_stu_chidao"
+            android:layout_width="100dp"
+            android:layout_height="fill_parent"
+            android:layout_toRightOf="@+id/kq_check_class_stu_qingjia"
+            android:drawableLeft="@drawable/kq_check_class_icon_late"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/kq_check_class_stu_queqing"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_toRightOf="@+id/kq_check_class_stu_chidao"
+            android:drawableLeft="@drawable/kq_check_class_icon_queqing"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_black"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

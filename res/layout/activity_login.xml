@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="edu.sdjzu.manager.LoginActivity$PlaceholderFragment" >
+
+    <CheckBox
+        android:id="@+id/Login_RemPass"
+        style="@style/teacher_login_radiobutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/linearLayout1"
+        android:layout_centerVertical="true"
+        android:text="@string/LoginActivity.CheckBox.RemPass" />
+
+    <CheckBox
+        android:id="@+id/Login_AutoLogin"
+        style="@style/teacher_login_radiobutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/Login_RemPass"
+        android:layout_alignRight="@+id/linearLayout1"
+        android:text="@string/LoginActivity.CheckBox.AutoLogin" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="240dp"
+        android:layout_height="96dp"
+        android:layout_above="@+id/Login_RemPass"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/login_teacher_edittext"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/Login_UserName"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:gravity="center_horizontal"
+            android:hint="@string/LoginActivity.EditText.UserName" >
+        </EditText>
+
+        <EditText
+            android:id="@+id/Login_UserPass"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:gravity="center_horizontal"
+            android:hint="@string/LoginActivity.EditText.UserPassword"
+            android:inputType="textPassword" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/Login_Button"
+        style="@style/MyLoginButton"
+        android:layout_width="148dp"
+        android:layout_height="48dp"
+        android:layout_below="@+id/Login_RemPass"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="68dp" />
+
+</RelativeLayout>

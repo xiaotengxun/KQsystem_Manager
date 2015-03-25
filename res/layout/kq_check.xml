@@ -1,0 +1,159 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <RelativeLayout
+        android:id="@+id/rel_1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" >
+
+        <TextView
+            android:id="@+id/tv_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/kq_check_stu_lable"
+            android:textColor="@color/color_blue"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/tv_1"
+            android:layout_marginTop="5dp"
+            android:background="@color/color_blue" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel_2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel_1"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal" >
+
+        <LinearLayout
+            android:id="@+id/lin_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:text="@string/kq_check_stu_name"
+                android:textColor="@color/color_black"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/kq_check_person_name"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:background="#bbb8c6"
+                android:textColor="@color/color_black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lin_1"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/kq_check_person_btn"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="@string/btn_sure" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel_3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel_2"
+        android:layout_marginTop="20dp" >
+
+        <TextView
+            android:id="@+id/tv_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/kq_check_class_lable"
+            android:textColor="@color/color_blue"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/tv_2"
+            android:layout_marginTop="5dp"
+            android:background="@color/color_blue" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel_3"
+        android:layout_marginTop="10dp" >
+
+        <RelativeLayout
+            android:id="@+id/rel3_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp" >
+
+            <TextView
+                android:id="@+id/kq_course_lable"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:text="@string/kq_check_course"
+                android:textColor="@color/color_black"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:id="@+id/kq_course"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_toRightOf="@+id/kq_course_lable" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rel3_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" >
+
+            <TextView
+                android:id="@+id/kq_class_lable"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:paddingTop="7dp"
+                android:text="@string/kq_check_class"
+                android:textColor="@color/color_black"
+                android:textSize="20sp" />
+
+            <Spinner
+                android:id="@+id/kq_class"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/kq_class_lable" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/kq_check_class_btn"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/rel3_2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="@string/btn_sure" />
+    </RelativeLayout>
+
+</RelativeLayout>

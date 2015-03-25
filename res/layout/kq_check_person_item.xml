@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:gravity="center_vertical"
+    android:layout_height="fill_parent" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="30dp" >
+
+        <ImageView
+            android:id="@+id/kq_check_person_kq_icon"
+            android:layout_width="30dp"
+            android:layout_height="fill_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/stu_kqlist_kqstatus_disabsent" />
+
+        <TextView
+            android:id="@+id/kq_check_person_kq_tv"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/kq_check_person_kq_icon"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_black"
+            android:textSize="19sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

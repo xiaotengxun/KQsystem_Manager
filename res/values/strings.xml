@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	
+    <string name="btn_delete">删除</string>
+    <string name="exit_tip">您确定要退出吗？</string>
+    <string name="btn_cancel">取消</string>
+    <string name="btn_sure">确定</string>
+    <string name="login_progress_tip1">正在登陆...</string>
+    <string name="login_progress_tip2">请等待...</string>
+    <string name="login_error_tip1">用户名或密码不能为空！</string>
+    <string name="login_error_tip2">登陆失败！</string>
+    <string name="tea_look_weekformat">第%1$s周</string>
+    <string name="jdtb_not_saved">未提交的考勤</string>
+    <string name="app_name">导员版</string>
+    <string name="ACTION_NETWORK_CHANGED">com.yc.service.backgourond</string>
+    <string name="ACTION_KQ_LATEST_INFO">com.yc.kq.last.info.action</string>
+    <string name="action_settings">Settings</string>
+    <string name="LoginActivity.Button.Login">登陆</string>
+    <string name="LoginActivity.EditText.UserName">   用	户	名</string>
+    <string name="LoginActivity.EditText.UserPassword">   密	码</string>
+    <string name="LoginActivity.CheckBox.RemPass">记住密码</string>
+    <string name="LoginActivity.CheckBox.AutoLogin">自动登陆</string>
+    <string name="tea_kq_save"></string>
+    <string name="kq_check_stu_lable">个人考勤查看</string>
+        <string name="kq_check_class_lable">集体考勤查看</string>
+    <string name="kq_check_stu_name">姓名：</string>
+    <string name="kq_check_course"> 课程：</string>
+    <string name="kq_check_class">班级：</string>
+    <string name="kq_check_qingjia">请假：</string>
+    <string name="kq_check_chidao">迟到：</string>
+    <string name="kq_check_queqing">缺勤：</string>
+    <string name="kq_check_class_lab1">课堂信息</string>
+    <string name="kq_check_class_lab2">考勤详细</string>
+    <string name="kq_check_tip1">请输入学生姓名！</string>
+	<string name="kq_check_tip2">信息选择不完整！</string>
+	<string name="kq_check_person_lable1">个人考勤数据</string>
+	<string name="kq_check_persion_record_lable">考勤记录</string>
+	<string name="kq_check_person_latetimes">缺勤次数: %1$s次</string>
+	<string name="kq_stu_name">姓名：</string>
+	<string name="kq_stu_class">班级：</string>
+	<string name="kq_stu_sno">学号：</string>
+	<string name="kq_check_person_tip1">该学生不存在！</string>
+</resources>
