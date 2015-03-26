@@ -40,4 +40,6 @@
 	<string name="kq_stu_class">班级：</string>
 	<string name="kq_stu_sno">学号：</string>
 	<string name="kq_check_person_tip1">该学生不存在！</string>
+	<string name="kq_new_kq_tip">新的考勤消息</string>
+	<string name="kq_kq_noinfo_tip">暂无考勤信息！</string>
 </resources>

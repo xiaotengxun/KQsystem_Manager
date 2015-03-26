@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name="edu.sdjzu.localtool.MyApplication"
@@ -51,8 +52,13 @@
                 <action android:name="NETWORK_ERROR" />
             </intent-filter>
         </receiver>
-        <receiver android:name="edu.sdjzu.broadcast.NetWorkChangeBroadCast" >
+          <receiver android:name="edu.sdjzu.broadcast.NewKqInfoReceiver" >
             <intent-filter>
+                <action android:name="com.yc.kq.last.info.action" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="edu.sdjzu.broadcast.NetWorkChangeBroadCast" >
+            <intent-filter android:priority="799">
                 <action android:name="NET_SUBMIT_KQ" />
             </intent-filter>
         </receiver>

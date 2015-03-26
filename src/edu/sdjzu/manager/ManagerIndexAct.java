@@ -49,10 +49,14 @@ public class ManagerIndexAct extends FragmentActivity {
 	private String[] tabTitle = { "考勤查看", "消息" };
 	private List<Fragment> listFrag = new ArrayList<Fragment>();
 	private Intent intent;
+	private boolean isNewInfo=false;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
+		if(null != getIntent().getStringExtra("id") && "info".equals(getIntent().getStringExtra("id"))){
+			isNewInfo=true;//判断是否有新的考勤信息到达
+		}
 		setContentView(R.layout.act_manager_index);
 		intent = new Intent();
 		intent.putExtra(Attr.jnoKey, String.valueOf(jno));
@@ -94,7 +98,11 @@ public class ManagerIndexAct extends FragmentActivity {
 		listFrag.add(new KQInfoFrag());
 		framPageAdapter = new TabFragmentPagerAdapter(getSupportFragmentManager(), userName, listFrag);
 		mViewPage.setAdapter(framPageAdapter);
-		mViewPage.setCurrentItem(0);
+		if(isNewInfo){
+			mViewPage.setCurrentItem(1);
+		}else{
+			mViewPage.setCurrentItem(0);
+		}
 	}
 
 	private void setListener() {
