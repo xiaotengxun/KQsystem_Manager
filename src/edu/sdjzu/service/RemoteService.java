@@ -1,20 +1,19 @@
 package edu.sdjzu.service;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import com.example.kqsystem_manager.R;
-
 import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
-import edu.sdjzu.attr.Attr;
+
+import com.example.kqsystem_manager.R;
+
 import edu.sdjzu.localtool.InternetStatus;
 import edu.sdjzu.manager.LoginAct;
 import edu.sdjzu.managetools.ManageTool;
@@ -36,6 +35,7 @@ public class RemoteService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		flags = START_STICKY;
 		startGetNewKqInfo();
+		Log.i("CHEN", "onStartCommand>>>>>>>>>>>>>>>");
 		return super.onStartCommand(intent, flags, startId);
 	}
 
@@ -58,7 +58,7 @@ public class RemoteService extends Service {
 					for (String s : list) {
 						tipMsg+=s;
 						String[] sArray = s.split("¡¢");
-						Log.i("chen", "msg=" + s);
+//						Log.i("chen", "msg=" + s);
 						if (sArray.length >= 2) {
 							KQInfo kqInfo = new KQInfo();
 							kqInfo.setTname(sArray[1]);
@@ -72,16 +72,14 @@ public class RemoteService extends Service {
 						manageTool.insertKqInfo(listKq);
 						Intent intent = new Intent(getString(R.string.ACTION_KQ_LATEST_INFO));
 						intent.putExtra("info", tipMsg);
-						sendBroadcast(intent);
+						sendOrderedBroadcast( intent,null);
 					}
 					try {
 						Thread.sleep(INFO_GET_TIME);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
-
 			}
 		};
 	}

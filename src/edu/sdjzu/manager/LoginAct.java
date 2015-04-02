@@ -57,6 +57,7 @@ public class LoginAct extends Activity {
 		loginAuto();
 	}
 
+	
 	private void initLayoutView() {
 		userNameTV = (EditText) this.findViewById(R.id.Login_UserName);
 		userPassTV = (EditText) this.findViewById(R.id.Login_UserPass);

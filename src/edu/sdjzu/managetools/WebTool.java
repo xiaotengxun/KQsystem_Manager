@@ -410,7 +410,7 @@ public class WebTool {
 				Object result = (Object) envelope.getResponse();
 				SoapObject data = (SoapObject) result;
 				int counts = data.getPropertyCount();
-				Log.i("chen", "ncounts=" + counts);
+//				Log.i("chen", "ncounts=" + counts);
 				for (int i = 0; i < counts; i++) {
 					listPKQ.add(data.getProperty(i).toString());
 				}

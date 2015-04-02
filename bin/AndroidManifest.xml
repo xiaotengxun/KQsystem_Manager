@@ -52,20 +52,22 @@
                 <action android:name="NETWORK_ERROR" />
             </intent-filter>
         </receiver>
-          <receiver android:name="edu.sdjzu.broadcast.NewKqInfoReceiver" >
+        <receiver android:name="edu.sdjzu.broadcast.NewKqInfoReceiver" >
             <intent-filter>
                 <action android:name="com.yc.kq.last.info.action" />
             </intent-filter>
         </receiver>
         <receiver android:name="edu.sdjzu.broadcast.NetWorkChangeBroadCast" >
-            <intent-filter android:priority="799">
+            <intent-filter android:priority="799" >
                 <action android:name="NET_SUBMIT_KQ" />
             </intent-filter>
         </receiver>
 
         <service android:name="edu.sdjzu.service.RemoteService" >
             <intent-filter>
-                <action android:name="com.yc.service.backgourond" />
+                <action android:name="com.manager.service.backgourond" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
     </application>

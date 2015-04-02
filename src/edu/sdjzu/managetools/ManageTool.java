@@ -17,6 +17,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Vibrator;
+import android.util.Log;
 import edu.sdjzu.attr.Attr;
 import edu.sdjzu.localtool.DatabaseManager;
 import edu.sdjzu.localtool.InternetStatus;
@@ -46,6 +47,7 @@ public class ManageTool {
 		boolean isSuccess = false;
 		InternetStatus is = new InternetStatus(context);
 		boolean isF = sp.getBoolean(Attr.isFirstLogin, true);
+		Log.i("chen", "net is connected >>" + is.isNetworkConnected());
 		if (is.isNetworkConnected()) {
 			if (WebLoginSuccess(username, password)) {
 				ManagerLoginTool teaWebTool = new ManagerLoginTool(context);
@@ -107,8 +109,7 @@ public class ManageTool {
 	 * @return
 	 */
 	private boolean LocalLoginSuccess(String username, String password) {
-		return false;// new LocalSqlTool(context).localLogin(username,
-						// password);
+		return new LocalSqlTool(context).localLogin(username, password);
 	}
 
 	/**
@@ -228,26 +229,31 @@ public class ManageTool {
 	public void updateKqInfo(List<Integer> listId) {
 		new LocalSqlTool(context).updateKqInfo(listId);
 	}
-	
-	private static int id=1;
+
+	private static int id = 1;
+
 	/**
 	 * 新的考勤信息通知
+	 * 
 	 * @param msgContent
 	 */
 	public void noticeNewKq(String msgContent) {
-		NotificationManager nm = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-		Notification n = new Notification(R.drawable.xinxin1, context.getString(R.string.kq_new_kq_tip), System.currentTimeMillis());
-		n.defaults=Notification.DEFAULT_SOUND|Notification.DEFAULT_VIBRATE;
+		NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+		Notification n = new Notification(R.drawable.xinxin1, context.getString(R.string.kq_new_kq_tip),
+				System.currentTimeMillis());
+		n.defaults = Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE;
 		n.flags = Notification.FLAG_AUTO_CANCEL;
 		Intent intent = new Intent(context, ManagerIndexAct.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.putExtra("id", "info");
-		PendingIntent contentIntent = PendingIntent.getActivity(context, 1, intent,
-				PendingIntent.FLAG_UPDATE_CURRENT);
-		n.setLatestEventInfo(context, "",msgContent, contentIntent);
+		PendingIntent contentIntent = PendingIntent.getActivity(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		n.setLatestEventInfo(context, "", msgContent, contentIntent);
 		id++;
 		nm.notify(id, n);
-		Vibrator vib = (Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE);   
-		vib.vibrate(2000);   
+		VibratorPhone(2000);
+	}
+	public void VibratorPhone(int times){
+		Vibrator vib = (Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE);
+		vib.vibrate(times);
 	}
 }

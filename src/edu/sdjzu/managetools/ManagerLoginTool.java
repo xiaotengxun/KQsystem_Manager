@@ -28,7 +28,7 @@ public class ManagerLoginTool {
 		// web.getPhotoByUno(uno);
 	}
 
-	public void secondLogin(String tno) {
-
+	public void secondLogin(String uno) {
+		web.getTeachTaskByUno(uno);
 	}
 }

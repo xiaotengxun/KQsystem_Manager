@@ -11,12 +11,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import edu.sdjzu.attr.Attr;
-import edu.sdjzu.model.KQInfo;
-import edu.sdjzu.model.KQStuClass;
-import edu.sdjzu.model.Students;
-import edu.sdjzu.model.TeachTask;
-import edu.sdjzu.model.UserInf;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -25,6 +19,10 @@ import android.os.Environment;
 import android.util.Base64;
 import android.util.JsonReader;
 import android.util.Log;
+import edu.sdjzu.model.KQInfo;
+import edu.sdjzu.model.Students;
+import edu.sdjzu.model.TeachTask;
+import edu.sdjzu.model.UserInf;
 
 public class LocalSqlTool {
 	private Context context;
@@ -35,7 +33,17 @@ public class LocalSqlTool {
 		super();
 		this.context = context;
 	}
-
+	public boolean localLogin(String username, String password) {
+		db = DatabaseManager.getInstance(context);
+		String sql = "select * from UserInf where Uno=? and Upwd=?";
+		Cursor cursor = db.Query(sql, new String[] { username, password });
+		if (cursor.getCount() > 0) {
+			cursor.close();
+			return true;
+		}
+		cursor.close();
+		return false;
+	}
 	// 将文件数据保存到SDCard
 	public void saveToSDCard(String content, String fileName) throws Exception {
 		File file = new File(Environment.getExternalStorageDirectory(), fileName);
@@ -148,6 +156,8 @@ public class LocalSqlTool {
 	public void insertTeachTaskByTaskNo(List<TeachTask> tList) {
 		String sql = "";
 		db = DatabaseManager.getInstance(context);
+		sql="delete from TeachTask";
+		db.execSQL(sql);
 		sql = "	insert into TeachTask(Rno,Cno,Cname,Tname,Rclass,Ctype,Rweek,Rterms) values(?,?,?,?,?,?,?,?)";
 		db.beginTransaction();
 		try {
@@ -246,7 +256,8 @@ public class LocalSqlTool {
 	 */
 	public void insertKqInfo(List<KQInfo> list) {
 		db = DatabaseManager.getInstance(context);
-		String sql = "insert into KqInfo(Info,IsRead,ReceiveTime,InMan values(?,?,?,?))";
+		Log.i("chen","insetKqinfo.size="+list.size());
+		String sql = "insert into KqInfo(Info,IsRead,ReceiveTime,InMan) values(?,?,?,?)";
 		db.beginTransaction();
 		int counts = list.size();
 		try {
@@ -258,6 +269,7 @@ public class LocalSqlTool {
 			}
 			db.setTransactionSuccessful();
 		} catch (Exception e) {
+			Log.i("chen",""+e);
 		} finally {
 			db.endTransaction();
 		}
@@ -272,6 +284,7 @@ public class LocalSqlTool {
 		db = DatabaseManager.getInstance(context);
 		String sql = "select * from KqInfo ";
 		Cursor cursor = db.Query(sql, null);
+		Log.i("chen", "getKqInfo .size="+cursor.getCount());
 		List<KQInfo> list = new ArrayList<KQInfo>();
 		while (cursor.moveToNext()) {
 			KQInfo kqInfo = new KQInfo();
@@ -280,6 +293,7 @@ public class LocalSqlTool {
 			kqInfo.setMsg(cursor.getString(cursor.getColumnIndex("Info")));
 			kqInfo.setTname(cursor.getString(cursor.getColumnIndex("InMan")));
 			kqInfo.setId(cursor.getInt(cursor.getColumnIndex("Id")));
+			list.add(kqInfo);
 		}
 		cursor.close();
 		return list;
@@ -292,8 +306,9 @@ public class LocalSqlTool {
 	 */
 	public void updateKqInfo(List<Integer> listId) {
 		db = DatabaseManager.getInstance(context);
+		Log.i("chen","listId.size()="+listId.size());
 		for (Integer id : listId) {
-			String sql = "update KqInfo set IsRead='1' where Id='" + String.valueOf(id) + "'";
+			String sql = "delete from KqInfo where Id='" + String.valueOf(id) + "'";
 			db.execSQL(sql);
 		}
 	}

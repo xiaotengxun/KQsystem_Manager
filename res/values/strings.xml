@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	
+	<string name="back_tip1">再按一次推出!</string>
     <string name="btn_delete">删除</string>
     <string name="exit_tip">您确定要退出吗？</string>
     <string name="btn_cancel">取消</string>
@@ -12,7 +12,9 @@
     <string name="tea_look_weekformat">第%1$s周</string>
     <string name="jdtb_not_saved">未提交的考勤</string>
     <string name="app_name">导员版</string>
-    <string name="ACTION_NETWORK_CHANGED">com.yc.service.backgourond</string>
+    <!-- com.manager.service.backgourond -->
+    <string name="ACTION_NEW_KQ_INFO">com.manager.service.backgourond</string>
+    <string name="ACTION_NETWORK_CHANGED">com.manager.service.backgourond</string>
     <string name="ACTION_KQ_LATEST_INFO">com.yc.kq.last.info.action</string>
     <string name="action_settings">Settings</string>
     <string name="LoginActivity.Button.Login">登陆</string>

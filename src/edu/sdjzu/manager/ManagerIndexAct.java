@@ -6,14 +6,16 @@ import java.util.List;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
@@ -21,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.Toast;
 
 import com.example.kqsystem_manager.R;
 
@@ -50,7 +53,10 @@ public class ManagerIndexAct extends FragmentActivity {
 	private List<Fragment> listFrag = new ArrayList<Fragment>();
 	private Intent intent;
 	private boolean isNewInfo=false;
-
+	private Handler mHandler;
+	private final int BACK_SUCCESS=0;
+	private int backTimes=0;
+	private final int backOffTime=4000;//按两次返回键之间的时间间隔
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
@@ -58,6 +64,9 @@ public class ManagerIndexAct extends FragmentActivity {
 			isNewInfo=true;//判断是否有新的考勤信息到达
 		}
 		setContentView(R.layout.act_manager_index);
+		startService(new Intent(getString(R.string.ACTION_NEW_KQ_INFO)));
+//		startService(new Intent(this,RemoteService.class));
+		Log.i("chen", "	startService(new Intent(getString(R.string.ACTION_NEW_KQ_INFO)))");
 		intent = new Intent();
 		intent.putExtra(Attr.jnoKey, String.valueOf(jno));
 		intent.putExtra(Attr.rnoKey, String.valueOf(rno));
@@ -66,6 +75,17 @@ public class ManagerIndexAct extends FragmentActivity {
 		initView();
 		setListener();
 		initActionBar();
+		mHandler=new Handler(){
+			@Override
+			public void handleMessage(Message msg) {
+				super.handleMessage(msg);
+				switch(msg.what){
+				case BACK_SUCCESS:
+					backTimes=0;
+					break;
+				}
+			}
+		};
 	}
 
 	private void initActionBar() {
@@ -100,11 +120,25 @@ public class ManagerIndexAct extends FragmentActivity {
 		mViewPage.setAdapter(framPageAdapter);
 		if(isNewInfo){
 			mViewPage.setCurrentItem(1);
+			isNewInfo=false;
 		}else{
 			mViewPage.setCurrentItem(0);
 		}
 	}
-
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		if(keyCode == event.KEYCODE_BACK){
+			Log.i("chen","keyback");
+			++backTimes;
+			if(backTimes==1){
+				Toast.makeText(ManagerIndexAct.this, getString(R.string.back_tip1), 1000).show();
+				mHandler.sendEmptyMessageDelayed(BACK_SUCCESS, backOffTime);
+			}else{
+				finish();
+			}
+		}
+		return true;
+	}
 	private void setListener() {
 		mViewPage.setOnPageChangeListener(new OnPageChangeListener() {
 			@Override
