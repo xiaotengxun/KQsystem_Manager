@@ -5,14 +5,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.example.kqsystem_manager.R;
+
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.os.Vibrator;
 import edu.sdjzu.attr.Attr;
 import edu.sdjzu.localtool.DatabaseManager;
 import edu.sdjzu.localtool.InternetStatus;
 import edu.sdjzu.localtool.LocalSqlTool;
+import edu.sdjzu.manager.ManagerIndexAct;
 import edu.sdjzu.model.KQInfo;
 import edu.sdjzu.model.KQStuClass;
 import edu.sdjzu.model.KQStuPerson;
@@ -218,5 +227,27 @@ public class ManageTool {
 	 */
 	public void updateKqInfo(List<Integer> listId) {
 		new LocalSqlTool(context).updateKqInfo(listId);
+	}
+	
+	private static int id=1;
+	/**
+	 * 新的考勤信息通知
+	 * @param msgContent
+	 */
+	public void noticeNewKq(String msgContent) {
+		NotificationManager nm = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+		Notification n = new Notification(R.drawable.xinxin1, context.getString(R.string.kq_new_kq_tip), System.currentTimeMillis());
+		n.defaults=Notification.DEFAULT_SOUND|Notification.DEFAULT_VIBRATE;
+		n.flags = Notification.FLAG_AUTO_CANCEL;
+		Intent intent = new Intent(context, ManagerIndexAct.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.putExtra("id", "info");
+		PendingIntent contentIntent = PendingIntent.getActivity(context, 1, intent,
+				PendingIntent.FLAG_UPDATE_CURRENT);
+		n.setLatestEventInfo(context, "",msgContent, contentIntent);
+		id++;
+		nm.notify(id, n);
+		Vibrator vib = (Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE);   
+		vib.vibrate(2000);   
 	}
 }

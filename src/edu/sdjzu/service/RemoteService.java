@@ -51,10 +51,12 @@ public class RemoteService extends Service {
 			@Override
 			public void run() {
 				while (isInfoGetting) {
-					Log.i("chen", "getInfo ing");
+//					Log.i("chen", "getInfo ing");
 					List<String> list = manageTool.getLatestKqInfoByUno(LoginAct.userName);
 					List<KQInfo> listKq = new ArrayList<KQInfo>();
+					String tipMsg="";
 					for (String s : list) {
+						tipMsg+=s;
 						String[] sArray = s.split("¡¢");
 						Log.i("chen", "msg=" + s);
 						if (sArray.length >= 2) {
@@ -69,7 +71,7 @@ public class RemoteService extends Service {
 					if (listKq.size() > 0) {
 						manageTool.insertKqInfo(listKq);
 						Intent intent = new Intent(getString(R.string.ACTION_KQ_LATEST_INFO));
-//						intent.putExtra("info", (Serializable) listKq);
+						intent.putExtra("info", tipMsg);
 						sendBroadcast(intent);
 					}
 					try {
