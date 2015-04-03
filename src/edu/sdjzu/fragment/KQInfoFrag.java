@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.DataSetObserver;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -65,6 +66,7 @@ public class KQInfoFrag extends Fragment {
 		tv.setTextSize(20);
 		tv.setPadding(30,30, 30, 30);
 		tv.setTextColor(color.color_black);
+		tv.setBackgroundColor(Color.WHITE);
 		dialog.setView(tv);
 		dialog.create().show();
 		dialog.setCancelable(false);

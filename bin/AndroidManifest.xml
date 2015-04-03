@@ -36,9 +36,12 @@
         </activity>
         <activity
             android:name="edu.sdjzu.manager.LoginAct"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
-        <activity android:name="edu.sdjzu.manager.ManagerIndexAct" >
+        <activity
+            android:name="edu.sdjzu.manager.ManagerIndexAct"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity android:name="edu.sdjzu.manager.TeaJDTBTipAct" >
         </activity>

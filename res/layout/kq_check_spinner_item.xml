@@ -6,6 +6,8 @@
         android:id="@+id/kq_spinner_tv"
         android:layout_width="150dp"
         android:singleLine="true"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:layout_height="wrap_content"
         android:textColor="#000000"
         android:textSize="20sp" />

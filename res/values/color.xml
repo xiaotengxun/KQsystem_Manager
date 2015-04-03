@@ -11,5 +11,6 @@
     <color name="color_blue">#4707ff</color>
     <color name="tab_scrollbar">#4642e3</color>
     <color name="jdtb_delete_bg">#b7b5b6</color>
+        <color name="color_bg">#979393</color>
 
 </resources>

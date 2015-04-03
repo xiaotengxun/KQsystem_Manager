@@ -16,12 +16,16 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Toast;
 
@@ -45,7 +49,7 @@ public class ManagerIndexAct extends FragmentActivity {
 	protected static float currentIndicatorLeft = 0;
 	private TabFragmentPagerAdapter framPageAdapter;
 	private ViewPager mViewPage;
-	private RadioGroup radioGroupTab;
+	private LinearLayout radioGroupTab;
 	private ImageView tabIndictor;
 	private int tabIndictorWidth = 0;
 	private int tabIndictorCurrentLeft = 0;
@@ -54,6 +58,7 @@ public class ManagerIndexAct extends FragmentActivity {
 	private Intent intent;
 	private boolean isNewInfo=false;
 	private Handler mHandler;
+	private List<TextView> listTab = new ArrayList<TextView>();
 	private final int BACK_SUCCESS=0;
 	private int backTimes=0;
 	private final int backOffTime=4000;//按两次返回键之间的时间间隔
@@ -65,8 +70,6 @@ public class ManagerIndexAct extends FragmentActivity {
 		}
 		setContentView(R.layout.act_manager_index);
 		startService(new Intent(getString(R.string.ACTION_NEW_KQ_INFO)));
-//		startService(new Intent(this,RemoteService.class));
-		Log.i("chen", "	startService(new Intent(getString(R.string.ACTION_NEW_KQ_INFO)))");
 		intent = new Intent();
 		intent.putExtra(Attr.jnoKey, String.valueOf(jno));
 		intent.putExtra(Attr.rnoKey, String.valueOf(rno));
@@ -74,7 +77,6 @@ public class ManagerIndexAct extends FragmentActivity {
 		findView();
 		initView();
 		setListener();
-		initActionBar();
 		mHandler=new Handler(){
 			@Override
 			public void handleMessage(Message msg) {
@@ -88,14 +90,10 @@ public class ManagerIndexAct extends FragmentActivity {
 		};
 	}
 
-	private void initActionBar() {
-		ActionBar actionBar = getActionBar();
-		actionBar.setTitle("");
-	}
 
 	private void findView() {
 		mViewPage = (ViewPager) findViewById(R.id.mViewPager);
-		radioGroupTab = (RadioGroup) findViewById(R.id.group_tab);
+		radioGroupTab = (LinearLayout) findViewById(R.id.group_tab);
 		tabIndictor = (ImageView) findViewById(R.id.tab_indictor);
 	}
 
@@ -108,11 +106,30 @@ public class ManagerIndexAct extends FragmentActivity {
 		tabIndictor.setLayoutParams(cursor_Params);
 		LayoutInflater mInflater = LayoutInflater.from(this);
 		for (int i = 0; i < tabTitle.length; i++) {
-			RadioButton rb = (RadioButton) mInflater.inflate(R.layout.radiogroup_item, null);
+			TextView rb = (TextView) mInflater.inflate(R.layout.radiogroup_item, null);
 			rb.setId(i);
 			rb.setText(tabTitle[i]);
+			rb.setClickable(true);
+			rb.setTag(i);
 			rb.setLayoutParams(new LayoutParams(tabIndictorWidth, LayoutParams.MATCH_PARENT));
+			rb.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					int index = (Integer) v.getTag();
+					TranslateAnimation animation = new TranslateAnimation(currentIndicatorLeft, v.getLeft(), 0f, 0f);
+					animation.setInterpolator(new LinearInterpolator());
+					animation.setDuration(100);
+					animation.setFillAfter(true);
+					// 执行位移动画
+					tabIndictor.startAnimation(animation);
+					mViewPage.setCurrentItem(index); // ViewPager 跟随一起 切换
+					// 记录当前 下标的距最左侧的 距离
+					currentIndicatorLeft = v.getLeft();
+				}
+			});
 			radioGroupTab.addView(rb);
+			listTab.add(rb);
 		}
 		listFrag.add(new KQCheckFrag());
 		listFrag.add(new KQInfoFrag());
@@ -143,9 +160,7 @@ public class ManagerIndexAct extends FragmentActivity {
 		mViewPage.setOnPageChangeListener(new OnPageChangeListener() {
 			@Override
 			public void onPageSelected(int arg0) {
-				if (radioGroupTab.getChildCount() > arg0) {
-					((RadioButton) radioGroupTab.getChildAt(arg0)).performClick();
-				}
+				listTab.get(arg0).performClick();
 			}
 
 			@Override
@@ -159,25 +174,6 @@ public class ManagerIndexAct extends FragmentActivity {
 			}
 		});
 
-		radioGroupTab.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				if (radioGroupTab.getChildAt(checkedId) != null) {
-
-					TranslateAnimation animation = new TranslateAnimation(currentIndicatorLeft,
-							((RadioButton) radioGroupTab.getChildAt(checkedId)).getLeft(), 0f, 0f);
-					animation.setInterpolator(new LinearInterpolator());
-					animation.setDuration(100);
-					animation.setFillAfter(true);
-					// 执行位移动画
-					tabIndictor.startAnimation(animation);
-					mViewPage.setCurrentItem(checkedId); // ViewPager 跟随一起 切换
-					// 记录当前 下标的距最左侧的 距离
-					currentIndicatorLeft = ((RadioButton) radioGroupTab.getChildAt(checkedId)).getLeft();
-				}
-			}
-		});
 	}
 
 }
