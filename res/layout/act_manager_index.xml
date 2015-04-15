@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:background="@color/color_bg" >
 
     <RelativeLayout
         android:id="@+id/tab_title"
@@ -8,13 +9,13 @@
         android:layout_height="50dp"
         android:layout_alignParentTop="true" >
 
-        <RadioGroup
+        <LinearLayout
             android:id="@+id/group_tab"
             android:layout_width="fill_parent"
-            android:layout_height="30dp"
+            android:layout_height="fill_parent"
             android:layout_alignParentTop="true"
             android:orientation="horizontal" >
-        </RadioGroup>
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/tab_indictor"

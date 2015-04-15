@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.example.kqsystem_manager.R;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -14,22 +12,22 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Vibrator;
 import edu.sdjzu.attr.Attr;
-import edu.sdjzu.localtool.DatabaseManager;
 import edu.sdjzu.localtool.InternetStatus;
 import edu.sdjzu.localtool.LocalSqlTool;
+import edu.sdjzu.manager.LoginAct;
 import edu.sdjzu.manager.ManagerIndexAct;
+import edu.sdjzu.manager.R;
+import edu.sdjzu.model.ChatInfo;
 import edu.sdjzu.model.KQInfo;
 import edu.sdjzu.model.KQStuClass;
 import edu.sdjzu.model.KQStuPerson;
-import edu.sdjzu.model.KQresult;
 import edu.sdjzu.model.Students;
-import edu.sdjzu.model.TeachProgress;
+import edu.sdjzu.xmpp.AmackManage;
 
-public class ManageTool {
+public class ManageDtTool {
 	private Context context;
 
 	/**
@@ -44,11 +42,22 @@ public class ManageTool {
 	 */
 	public boolean LoginStartActivity(String username, String password, SharedPreferences sp) {
 		boolean isSuccess = false;
-		InternetStatus is = new InternetStatus(context);
 		boolean isF = sp.getBoolean(Attr.isFirstLogin, true);
+		ManagerLgTool teaWebTool = new ManagerLgTool(context);
+		String lastUserName = sp.getString(Attr.loginUserName, null);
+		boolean isCacheClear = false;
+		if (null != lastUserName && !lastUserName.equals(username)) {
+			isCacheClear = true;
+			teaWebTool.clearCache();
+			isF = true;
+		}
+		InternetStatus is = new InternetStatus(context);
 		if (is.isNetworkConnected()) {
-			if (WebLoginSuccess(username, password)) {
-				ManagerLoginTool teaWebTool = new ManagerLoginTool(context);
+			AmackManage am = new AmackManage();
+			boolean isRegistered = sp.getBoolean(Attr.userRegisterKey, false);
+			if (WebLoginSuccess(username, password) && AmackManage.login(username, password, isRegistered)) {
+				isRegistered = true;
+				sp.edit().putBoolean(Attr.userRegisterKey, isRegistered).commit();
 				if (isF) {// 第一次获得所有数据操作
 					try {
 						teaWebTool.firstLogin(username);
@@ -67,13 +76,15 @@ public class ManageTool {
 					}
 				}
 			}
+			context.startService(new Intent(context.getString(R.string.ACTION_NEW_KQ_INFO)));
 		} else {
 			return LocalLoginSuccess(username, password);
 		}
+		// sp.edit().putString("ServiceLoginUserName", username).commit();
 		return isSuccess;
 	}
 
-	public ManageTool(Context context) {
+	public ManageDtTool(Context context) {
 		super();
 		this.context = context;
 	}
@@ -107,8 +118,7 @@ public class ManageTool {
 	 * @return
 	 */
 	private boolean LocalLoginSuccess(String username, String password) {
-		return false;// new LocalSqlTool(context).localLogin(username,
-						// password);
+		return new LocalSqlTool(context).localLogin(username, password);
 	}
 
 	/**
@@ -228,26 +238,69 @@ public class ManageTool {
 	public void updateKqInfo(List<Integer> listId) {
 		new LocalSqlTool(context).updateKqInfo(listId);
 	}
-	
-	private static int id=1;
+
 	/**
-	 * 新的考勤信息通知
-	 * @param msgContent
+	 * 向本地插入聊天消息
+	 * 
+	 * @param list
 	 */
-	public void noticeNewKq(String msgContent) {
-		NotificationManager nm = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-		Notification n = new Notification(R.drawable.xinxin1, context.getString(R.string.kq_new_kq_tip), System.currentTimeMillis());
-		n.defaults=Notification.DEFAULT_SOUND|Notification.DEFAULT_VIBRATE;
-		n.flags = Notification.FLAG_AUTO_CANCEL;
-		Intent intent = new Intent(context, ManagerIndexAct.class);
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-		intent.putExtra("id", "info");
-		PendingIntent contentIntent = PendingIntent.getActivity(context, 1, intent,
-				PendingIntent.FLAG_UPDATE_CURRENT);
-		n.setLatestEventInfo(context, "",msgContent, contentIntent);
-		id++;
-		nm.notify(id, n);
-		Vibrator vib = (Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE);   
-		vib.vibrate(2000);   
+	public void insertNewChatInfo(List<ChatInfo> list) {
+		new LocalSqlTool(context).insertNewChatInfo(list);
 	}
+
+	/**
+	 * 删除聊天消息
+	 * 
+	 * @param list
+	 */
+	public void deleteChatInfo(List<ChatInfo> list) {
+		new LocalSqlTool(context).deleteChatInfo(list);
+	}
+
+	/**
+	 * 根据聊天消息的id更新消息的阅读状态
+	 * 
+	 * @param id
+	 */
+	public void updateChatInfoReadState(String id) {
+		new LocalSqlTool(context).updateChatInfoReadState(id);
+	}
+
+	/**
+	 * 获得聊天的种类条目
+	 * 
+	 * @param no
+	 * @return
+	 */
+	public List<ChatInfo> getChatGroup(String no) {
+		return new LocalSqlTool(context).getChatGroup(no);
+	}
+
+	/**
+	 * 获得全部学生
+	 * 
+	 * @return
+	 */
+	public List<Students> getAllStu() {
+		return new LocalSqlTool(context).getAllStu();
+	}
+
+	public String getManageName(String no) {
+		return new LocalSqlTool(context).getManageName(no);
+	}
+
+	/**
+	 * 返回详细的聊天信息
+	 * 
+	 * @param pSno
+	 * @return
+	 */
+	public List<ChatInfo> getChatDetail(String pSno) {
+		return new LocalSqlTool(context).getChatDetail(pSno);
+	}
+
+	public void deleteChatGroup(List<String> list, String tno) {
+		new LocalSqlTool(context).deleteChatGroup(list, tno);
+	}
+
 }

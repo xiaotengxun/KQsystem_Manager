@@ -14,11 +14,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.kqsystem_manager.R;
-
 import edu.sdjzu.adapter.KQCheckPersonAdapter;
-import edu.sdjzu.managetools.ManageTool;
+import edu.sdjzu.manager.R;
+import edu.sdjzu.managetools.ManageDtTool;
 import edu.sdjzu.model.KQStuPerson;
 
 public class KQCheckPersonFrag extends Fragment {
@@ -26,7 +24,7 @@ public class KQCheckPersonFrag extends Fragment {
 	private String stuClass = "", stuSno = "";
 	private TextView tvStuName, tvStuClass, tvStuSno;
 	private ListView recordListView;
-	private ManageTool manageTool;
+	private ManageDtTool manageTool;
 	private HashMap<String, String> hashStuInfo = new HashMap<String, String>();
 	private Handler mHandler;
 	private static final int KQ_PERSON_INFO = 1;
@@ -45,7 +43,7 @@ public class KQCheckPersonFrag extends Fragment {
 	}
 
 	private void initView() {
-		manageTool = new ManageTool(getActivity());
+		manageTool = new ManageDtTool(getActivity());
 		tvStuClass = (TextView) getView().findViewById(R.id.kq_check_person_stuclass);
 		tvStuName = (TextView) getView().findViewById(R.id.kq_check_person_stuname);
 		tvStuSno = (TextView) getView().findViewById(R.id.kq_check_person_stusno);

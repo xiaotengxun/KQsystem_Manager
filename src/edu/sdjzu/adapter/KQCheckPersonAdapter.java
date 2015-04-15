@@ -10,9 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.example.kqsystem_manager.R;
-
+import edu.sdjzu.manager.R;
 import edu.sdjzu.model.KQStuPerson;
 
 public class KQCheckPersonAdapter extends BaseAdapter {

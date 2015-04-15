@@ -3,15 +3,13 @@ package edu.sdjzu.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.kqsystem_manager.R;
-
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import edu.sdjzu.manager.R;
 import edu.sdjzu.model.KQStuClass;
 
 public class KQCheckClassAdapter extends BaseAdapter {

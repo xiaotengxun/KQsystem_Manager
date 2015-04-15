@@ -32,6 +32,9 @@ public class DBHelper extends SQLiteOpenHelper {
 		db.execSQL("CREATE TABLE  KQresult  (Kno integer primary key AUTOINCREMENT,Rno  int,Jno  int ,Sno  varchar(15) ,Kstate  varchar(3),"
 				+ "Kmarks  varchar(20) DEFAULT 'Œﬁ',IsSubmin  varchar(3) DEFAULT 'Œ¥Ã·Ωª',InMan  varchar(20),InTime  datetime)");
 		db.execSQL("CREATE TABLE KqInfo (Id integer primary key AUTOINCREMENT,Info varchar(200),IsRead int DEFAULT '0',ReceiveTime datetime,InMan varchar(10))");
+		db.execSQL("CREATE TABLE ChatInfo (Id integer primary key AUTOINCREMENT,SendNo varchar(15),ReceiveNo varchar(15),Msg varchar(200),SendName varchar(10),"
+				+ "ReceiveName varchar(10),Time datetime,BothSend int,IsRead int,SendType varchar(2),ReceiveType varchar(2))");
+
 	}
 
 	@Override

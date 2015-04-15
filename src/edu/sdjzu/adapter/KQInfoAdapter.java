@@ -6,20 +6,17 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import com.example.kqsystem_manager.R;
-
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
-import edu.sdjzu.managetools.ManageTool;
+import edu.sdjzu.manager.R;
+import edu.sdjzu.managetools.ManageDtTool;
 import edu.sdjzu.model.KQInfo;
 
 public class KQInfoAdapter extends BaseAdapter {
@@ -109,7 +106,7 @@ public class KQInfoAdapter extends BaseAdapter {
 		for (Entry<Integer, Integer> entry : listSet) {
 			listId.add(entry.getKey());
 		}
-		ManageTool managerTool = new ManageTool(context);
+		ManageDtTool managerTool = new ManageDtTool(context);
 		managerTool.updateKqInfo(listId);
 	}
 

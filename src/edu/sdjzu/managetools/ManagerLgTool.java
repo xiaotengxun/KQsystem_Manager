@@ -7,11 +7,11 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-public class ManagerLoginTool {
+public class ManagerLgTool {
 	private Context context;
 	private WebTool web;
 
-	public ManagerLoginTool(Context ctx) {
+	public ManagerLgTool(Context ctx) {
 		context = ctx;
 		try {
 			web = new WebTool(context);
@@ -28,7 +28,11 @@ public class ManagerLoginTool {
 		// web.getPhotoByUno(uno);
 	}
 
-	public void secondLogin(String tno) {
+	public void secondLogin(String uno) {
+		web.getTeachTaskByUno(uno);
+	}
+
+	public void clearCache() {
 
 	}
 }

@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	
+    <item type="id" name="first_tag"></item>
+    <item type="id" name="second_tag"></item>
+    <item type="id" name="third_tag"></item>
+	<string name="back_tip1">再按一次推出!</string>
     <string name="btn_delete">删除</string>
+    <string name="info_add">写信息</string>
     <string name="exit_tip">您确定要退出吗？</string>
     <string name="btn_cancel">取消</string>
-    <string name="btn_sure">确定</string>
+    <string name="btn_sure">确 定</string>
     <string name="login_progress_tip1">正在登陆...</string>
     <string name="login_progress_tip2">请等待...</string>
     <string name="login_error_tip1">用户名或密码不能为空！</string>
@@ -12,8 +16,11 @@
     <string name="tea_look_weekformat">第%1$s周</string>
     <string name="jdtb_not_saved">未提交的考勤</string>
     <string name="app_name">导员版</string>
-    <string name="ACTION_NETWORK_CHANGED">com.yc.service.backgourond</string>
+    <!-- com.manager.service.backgourond -->
+    <string name="ACTION_NEW_KQ_INFO">com.manager.service.backgourond</string>
+    <string name="ACTION_NETWORK_CHANGED">com.manager.netchanged</string>
     <string name="ACTION_KQ_LATEST_INFO">com.yc.kq.last.info.action</string>
+    <string name="ACTION_NEW_CHATINFO_ACTION">manage.msg.receiver</string>
     <string name="action_settings">Settings</string>
     <string name="LoginActivity.Button.Login">登陆</string>
     <string name="LoginActivity.EditText.UserName">   用	户	名</string>
@@ -41,5 +48,7 @@
 	<string name="kq_stu_sno">学号：</string>
 	<string name="kq_check_person_tip1">该学生不存在！</string>
 	<string name="kq_new_kq_tip">新的考勤消息</string>
+	<string name="kq_new_chat_tip">新的家长信息</string>
 	<string name="kq_kq_noinfo_tip">暂无考勤信息！</string>
+	<string name="kq_no_info_tip">暂无最新消息</string>
 </resources>

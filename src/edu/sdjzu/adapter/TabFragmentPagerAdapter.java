@@ -31,7 +31,7 @@ public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
 	public Fragment getItem(int arg0) {
 		Fragment fg = null;
 		Bundle args = new Bundle();
-		args.putString(Attr.userKey, userName);
+//		args.putString(Attr.userKey, userName);
 		if (arg0 < listFrag.size()) {
 			fg = listFrag.get(arg0);
 			fg.setArguments(args);

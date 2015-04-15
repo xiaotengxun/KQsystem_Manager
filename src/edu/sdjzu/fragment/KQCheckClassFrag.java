@@ -12,20 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.example.kqsystem_manager.R;
-
 import edu.sdjzu.adapter.KQCheckClassAdapter;
-import edu.sdjzu.managetools.ManageTool;
+import edu.sdjzu.manager.R;
+import edu.sdjzu.managetools.ManageDtTool;
 import edu.sdjzu.model.KQStuClass;
-import edu.sdjzu.model.Students;
 
 public class KQCheckClassFrag extends Fragment {
 	private String className = "";
 	private String courseName = "";
 	private ListView listView;
 	private TextView tvCourse, tvClass, tvQingjia, tvChidao, tvQueqing;
-	private ManageTool manageTool;
+	private ManageDtTool manageTool;
 	private Handler mHandler;
 	private final static int CLASS_KQ_INFO_GET = 0;
 	private List<KQStuClass> listStu = new ArrayList<KQStuClass>();
@@ -49,7 +46,7 @@ public class KQCheckClassFrag extends Fragment {
 		tvCourse.setText(courseName);
 		tvClass.setText(className);
 
-		manageTool = new ManageTool(getActivity());
+		manageTool = new ManageDtTool(getActivity());
 		mHandler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {

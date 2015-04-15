@@ -23,18 +23,16 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.kqsystem_manager.R;
-
 import edu.sdjzu.manager.KQCheckDetailAct;
-import edu.sdjzu.managetools.ManageTool;
+import edu.sdjzu.manager.R;
+import edu.sdjzu.managetools.ManageDtTool;
 
 public class KQCheckFrag extends Fragment {
 	private Spinner spinnerCourse, spinnerClass;
 	private String classStr = "", courseStr = "";
 	private Handler mHandler;
 	private final static int CLASS_UPDATE = 0;
-	private ManageTool manageTool;
+	private ManageDtTool manageTool;
 	private List<String> list;
 	private Button personSearchBtn, classSearchBtn;
 	private EditText stuNameEdit;
@@ -58,7 +56,7 @@ public class KQCheckFrag extends Fragment {
 		spinnerCourse = (Spinner) getView().findViewById(R.id.kq_course);
 
 		list = new ArrayList<String>();
-		manageTool = new ManageTool(getActivity());
+		manageTool = new ManageDtTool(getActivity());
 		mHandler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {

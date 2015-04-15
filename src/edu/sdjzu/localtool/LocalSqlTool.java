@@ -11,12 +11,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import edu.sdjzu.attr.Attr;
-import edu.sdjzu.model.KQInfo;
-import edu.sdjzu.model.KQStuClass;
-import edu.sdjzu.model.Students;
-import edu.sdjzu.model.TeachTask;
-import edu.sdjzu.model.UserInf;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -25,15 +19,43 @@ import android.os.Environment;
 import android.util.Base64;
 import android.util.JsonReader;
 import android.util.Log;
+import edu.sdjzu.model.ChatInfo;
+import edu.sdjzu.model.KQInfo;
+import edu.sdjzu.model.Students;
+import edu.sdjzu.model.TeachTask;
+import edu.sdjzu.model.UserInf;
 
 public class LocalSqlTool {
 	private Context context;
 	private DatabaseManager db;
-	private static List<HashMap<String, String>> stuListHashMap = new ArrayList<HashMap<String, String>>();
 
 	public LocalSqlTool(Context context) {
 		super();
 		this.context = context;
+	}
+
+	public String getManageName(String no) {
+		String sql = "select * from UserInf where Uno="+no;
+		String name = "";
+		db = DatabaseManager.getInstance(context);
+		Cursor cursor = db.Query(sql, null);
+		if (cursor.moveToNext()) {
+			name = cursor.getString(cursor.getColumnIndex("Uname"));
+		}
+		cursor.close();
+		return name;
+	}
+
+	public boolean localLogin(String username, String password) {
+		db = DatabaseManager.getInstance(context);
+		String sql = "select * from UserInf where Uno=? and Upwd=?";
+		Cursor cursor = db.Query(sql, new String[] { username, password });
+		if (cursor.getCount() > 0) {
+			cursor.close();
+			return true;
+		}
+		cursor.close();
+		return false;
 	}
 
 	// 将文件数据保存到SDCard
@@ -148,6 +170,8 @@ public class LocalSqlTool {
 	public void insertTeachTaskByTaskNo(List<TeachTask> tList) {
 		String sql = "";
 		db = DatabaseManager.getInstance(context);
+		sql = "delete from TeachTask";
+		db.execSQL(sql);
 		sql = "	insert into TeachTask(Rno,Cno,Cname,Tname,Rclass,Ctype,Rweek,Rterms) values(?,?,?,?,?,?,?,?)";
 		db.beginTransaction();
 		try {
@@ -157,7 +181,6 @@ public class LocalSqlTool {
 				db.execSQL(sql, arg);
 			}
 			db.setTransactionSuccessful();
-			Log.i("chen", "insertTeachTaskByTaskNo success");
 		} catch (Exception e) {
 			Log.i("chen", "insertTeachTaskByTaskNo exeception" + e);
 		} finally {
@@ -173,8 +196,10 @@ public class LocalSqlTool {
 	public void insertClassStuByRno(List<Students> stuList) {
 		if (stuList.size() == 0)
 			return;
-		String sql = "insert into Students(Sid,Sno,Spwd,Ppwd,Sname,Ssex,Ssdept,Sclass,Sstate,Stel,Ptel,Spic) values(?,?,?,?,?,?,?,?,?,?,?,?)";
 		db = DatabaseManager.getInstance(context);
+		String sql = "delete from Students";
+		db.execSQL(sql);
+		sql = "insert into Students(Sid,Sno,Spwd,Ppwd,Sname,Ssex,Ssdept,Sclass,Sstate,Stel,Ptel,Spic) values(?,?,?,?,?,?,?,?,?,?,?,?)";
 		for (int i = 0; i < stuList.size(); i++) {
 			Students stu = stuList.get(i);
 			String[] arg = { stu.getStuId(), stu.getStuNo(), stu.getStuPassword(), stu.getParPassword(),
@@ -197,7 +222,6 @@ public class LocalSqlTool {
 		while (cursor.moveToNext()) {
 			list.add(cursor.getString(cursor.getColumnIndex("Cname")));
 		}
-		Log.i("chen", "course.length=" + list.size());
 		return list;
 	}
 
@@ -216,7 +240,6 @@ public class LocalSqlTool {
 			String[] claArray = claStr.split("、");
 			list = Arrays.asList(claArray);
 		}
-		Log.i("chen", "class.length=" + list.size());
 		return list;
 	}
 
@@ -246,7 +269,7 @@ public class LocalSqlTool {
 	 */
 	public void insertKqInfo(List<KQInfo> list) {
 		db = DatabaseManager.getInstance(context);
-		String sql = "insert into KqInfo(Info,IsRead,ReceiveTime,InMan values(?,?,?,?))";
+		String sql = "insert into KqInfo(Info,IsRead,ReceiveTime,InMan) values(?,?,?,?)";
 		db.beginTransaction();
 		int counts = list.size();
 		try {
@@ -258,6 +281,7 @@ public class LocalSqlTool {
 			}
 			db.setTransactionSuccessful();
 		} catch (Exception e) {
+			Log.i("chen", "insertKqInfo" + e);
 		} finally {
 			db.endTransaction();
 		}
@@ -270,7 +294,7 @@ public class LocalSqlTool {
 	 */
 	public List<KQInfo> getKqInfo() {
 		db = DatabaseManager.getInstance(context);
-		String sql = "select * from KqInfo ";
+		String sql = "select * from KqInfo order by ReceiveTime desc";
 		Cursor cursor = db.Query(sql, null);
 		List<KQInfo> list = new ArrayList<KQInfo>();
 		while (cursor.moveToNext()) {
@@ -280,6 +304,7 @@ public class LocalSqlTool {
 			kqInfo.setMsg(cursor.getString(cursor.getColumnIndex("Info")));
 			kqInfo.setTname(cursor.getString(cursor.getColumnIndex("InMan")));
 			kqInfo.setId(cursor.getInt(cursor.getColumnIndex("Id")));
+			list.add(kqInfo);
 		}
 		cursor.close();
 		return list;
@@ -293,9 +318,171 @@ public class LocalSqlTool {
 	public void updateKqInfo(List<Integer> listId) {
 		db = DatabaseManager.getInstance(context);
 		for (Integer id : listId) {
-			String sql = "update KqInfo set IsRead='1' where Id='" + String.valueOf(id) + "'";
+			String sql = "delete from KqInfo where Id='" + String.valueOf(id) + "'";
 			db.execSQL(sql);
 		}
+	}
+
+	/**
+	 * 向本地插入聊天消息
+	 * 
+	 * @param list
+	 */
+	public void insertNewChatInfo(List<ChatInfo> list) {
+		// (SendNo,ReceiveNo ,Msg ,SendName,"
+		// + "ReceiveName,Time,BothSend,IsRead,SendType,ReceiveType;
+		String sql = "insert into ChatInfo(SendNo,ReceiveNo,Msg,SendName,ReceiveName,Time,"
+				+ "BothSend,IsRead,SendType,ReceiveType) values(?,?,?,?,?,?,?,?,?,?)";
+		db = DatabaseManager.getInstance(context);
+		db.beginTransaction();
+		try {
+			int size = list.size();
+			for (int i = 0; i < size; ++i) {
+				ChatInfo ch = list.get(i);
+				String[] arg = new String[] { ch.getSenderNo(), ch.getReceiverNo(), ch.getMsg(), ch.getSendName(),
+						ch.getReceiveName(), ch.getTime(), String.valueOf(ch.getBothsend()),
+						String.valueOf(ch.getIsRead()), ch.getSendType(), ch.getReceiveType() };
+				db.execSQL(sql, arg);
+			}
+			db.setTransactionSuccessful();
+		} catch (Exception e) {
+			Log.i("chen", "insert chatinfo error =" + e);
+		} finally {
+			db.endTransaction();
+		}
+	}
+
+	/**
+	 * 获得聊天的种类条目
+	 * 
+	 * @param no
+	 * @return
+	 */
+	public List<ChatInfo> getChatGroup(String no) {
+		List<ChatInfo> listChatInfo = new ArrayList<ChatInfo>();
+		String sql = "select * from ChatInfo where SendNo=" + no + " group by ReceiveNo"+" order by Time desc";
+		db = DatabaseManager.getInstance(context);
+		Cursor cursor = db.Query(sql, null);
+		while (cursor.moveToNext()) {
+			ChatInfo chatInfo = new ChatInfo();
+			chatInfo.setId(cursor.getString(cursor.getColumnIndex("Id")));
+			chatInfo.setIsRead(Integer.valueOf(cursor.getString(cursor.getColumnIndex("IsRead"))));
+			chatInfo.setMsg(cursor.getString(cursor.getColumnIndex("Msg")));
+			chatInfo.setSenderNo(cursor.getString(cursor.getColumnIndex("SendNo")));
+			chatInfo.setSendName(cursor.getString(cursor.getColumnIndex("SendName")));
+			chatInfo.setReceiveName(cursor.getString(cursor.getColumnIndex("ReceiveName")));
+			chatInfo.setReceiverNo(cursor.getString(cursor.getColumnIndex("ReceiveNo")));
+			chatInfo.setTime(cursor.getString(cursor.getColumnIndex("Time")));
+			listChatInfo.add(chatInfo);
+		}
+		return listChatInfo;
+	}
+
+	/**
+	 * 删除聊天消息
+	 * 
+	 * @param list
+	 */
+	public void deleteChatInfo(List<ChatInfo> list) {
+		String sql = "delete from ChatInfo where id=";
+		int size = list.size();
+		if (size > 0) {
+			sql += list.get(0);
+		}
+		for (int i = 1; i < size; i++) {
+			sql += " or id=" + list.get(i);
+		}
+		if (size > 0) {
+			db = DatabaseManager.getInstance(context);
+			db.execSQL(sql);
+		}
+	}
+
+	/**
+	 * 根据聊天消息的id更新消息的阅读状态
+	 * 
+	 * @param id
+	 */
+	public void updateChatInfoReadState(String id) {
+		String sql = "update ChatInfo set IsRead=1 where id=" + id;
+		db = DatabaseManager.getInstance(context);
+		db.execSQL(sql);
+	}
+
+	/**
+	 * 获得全部学生
+	 * 
+	 * @return
+	 */
+	public List<Students> getAllStu() {
+		List<Students> listStu = new ArrayList<Students>();
+		String sql = "select * from Students";
+		db = DatabaseManager.getInstance(context);
+		Cursor cursor = db.Query(sql, null);
+		while (cursor.moveToNext()) {
+			Students stu = new Students();
+			stu.setStuClass(cursor.getString(cursor.getColumnIndex("Sclass")));
+			stu.setStuName(cursor.getString(cursor.getColumnIndex("Sname")));
+			stu.setStuNo(cursor.getString(cursor.getColumnIndex("Sno")));
+			listStu.add(stu);
+		}
+		cursor.close();
+		return listStu;
+	}
+
+	/**
+	 * 返回详细的聊天信息
+	 * 
+	 * @param pSno
+	 * @return
+	 */
+	public List<ChatInfo> getChatDetail(String pSno) {
+		List<ChatInfo> listChat = new ArrayList<ChatInfo>();
+		String sql = "select * from ChatInfo where SendNo=" + pSno + " or ReceiveNo=" + pSno + " order by Time asc";
+		db = DatabaseManager.getInstance(context);
+		Cursor cursor = db.Query(sql, null);
+		while (cursor.moveToNext()) {
+			ChatInfo chatInfo = new ChatInfo();
+			chatInfo.setMsg(cursor.getString(cursor.getColumnIndex("Msg")));
+			chatInfo.setBothsend(Integer.valueOf(cursor.getString(cursor.getColumnIndex("BothSend"))));
+			chatInfo.setTime(cursor.getString(cursor.getColumnIndex("Time")));
+			listChat.add(chatInfo);
+		}
+		cursor.close();
+		int size = listChat.size();
+		// for (int i = 0; i < size; ++i) {
+		// ChatInfo firstChat = listChat.get(i);
+		// for (int j = i; j < size; ++j) {
+		// ChatInfo sendChat = listChat.get(j);
+		// int compare =
+		// firstChat.getTime().compareToIgnoreCase(sendChat.getTime());
+		// if (compare < 0) {// 大于
+		// listChat.set(i, sendChat);
+		// listChat.set(j, firstChat);
+		// firstChat = listChat.get(i);
+		// }
+		// }
+		// }
+		return listChat;
+	}
+
+	public void deleteChatGroup(List<String> list, String tno) {
+		String sql = "delete from ChatInfo where SendNo=" + tno + " and (";
+		int size = list.size();
+		if (size > 0) {
+			for (int i = 0; i < size - 2; ++i) {
+				sql += " receiveNo=" + list.get(i) + " or";
+			}
+			sql += " receiveNo=" + list.get(size - 1) + ")";
+			db = DatabaseManager.getInstance(context);
+			db.execSQL(sql);
+		}
+	}
+
+	public void clearCache() {
+		String sql = "delete from Students";
+		db = DatabaseManager.getInstance(context);
+		db.execSQL(sql);
 	}
 
 }

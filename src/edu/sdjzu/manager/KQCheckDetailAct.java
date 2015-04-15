@@ -1,12 +1,8 @@
 package edu.sdjzu.manager;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-
-import com.example.kqsystem_manager.R;
-
 import edu.sdjzu.fragment.KQCheckClassFrag;
 import edu.sdjzu.fragment.KQCheckPersonFrag;
 
@@ -15,7 +11,6 @@ public class KQCheckDetailAct extends FragmentActivity {
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
 		setContentView(R.layout.kq_check_detail);
-		initActionBar();
 		choseView();
 	}
 
@@ -47,8 +42,4 @@ public class KQCheckDetailAct extends FragmentActivity {
 		}
 	}
 
-	private void initActionBar() {
-		ActionBar actionBar = getActionBar();
-		actionBar.setTitle("");
-	}
 }

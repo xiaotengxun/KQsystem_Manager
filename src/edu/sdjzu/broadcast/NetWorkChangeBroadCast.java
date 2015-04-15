@@ -3,8 +3,7 @@ package edu.sdjzu.broadcast;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-
-import com.example.kqsystem_manager.R;
+import edu.sdjzu.manager.R;
 
 public class NetWorkChangeBroadCast extends BroadcastReceiver {
 

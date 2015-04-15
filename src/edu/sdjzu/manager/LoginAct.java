@@ -14,15 +14,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.example.kqsystem_manager.R;
-
 import edu.sdjzu.attr.Attr;
-import edu.sdjzu.managetools.ManageTool;
+import edu.sdjzu.managetools.ManageDtTool;
 import edu.sdjzu.service.RemoteService;
 
 public class LoginAct extends Activity {
-	public static String userName = "";
 	private EditText userNameTV = null;// 用户名输入框
 	private EditText userPassTV = null;// 密码输入框
 	private CheckBox remPassCB = null;// 密码记住框
@@ -37,13 +33,13 @@ public class LoginAct extends Activity {
 	private Thread loginThread;
 	private String name = "";
 	private String pass = "";
-	private ManageTool loginClass;
+	private ManageDtTool loginClass;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		loginClass = new ManageTool(LoginAct.this);
+		loginClass = new ManageDtTool(LoginAct.this);
 		sp = getSharedPreferences(Attr.sharePrefenceName, 0);
 		progressDialog = new ProgressDialog(LoginAct.this);
 		progressDialog.setTitle(getString(R.string.login_progress_tip1));
@@ -57,6 +53,7 @@ public class LoginAct extends Activity {
 		loginAuto();
 	}
 
+	
 	private void initLayoutView() {
 		userNameTV = (EditText) this.findViewById(R.id.Login_UserName);
 		userPassTV = (EditText) this.findViewById(R.id.Login_UserPass);
@@ -83,7 +80,7 @@ public class LoginAct extends Activity {
 					remenberPass();
 					remenberAuto();
 					loginButton.setClickable(true);
-					userName = name;
+					Attr.userName = name;
 					moveToAct();
 					break;
 				case DIALOG_START:
@@ -97,6 +94,7 @@ public class LoginAct extends Activity {
 	}
 
 	private void moveToAct() {
+		Attr.isLogin=true;
 		Intent intent = new Intent();
 		intent.setClass(LoginAct.this, ManagerIndexAct.class);
 		startActivity(intent);

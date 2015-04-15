@@ -7,11 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
-
-import com.example.kqsystem_manager.R;
-
 import edu.sdjzu.attr.Attr;
-import edu.sdjzu.managetools.ManageTool;
+import edu.sdjzu.managetools.ManageDtTool;
 
 public class SpashAct extends Activity {
 	private Runnable delayRun;
@@ -42,7 +39,7 @@ public class SpashAct extends Activity {
 		new Thread() {
 			@Override
 			public void run() {
-				ManageTool managerTool = new ManageTool(getApplicationContext());
+				ManageDtTool managerTool = new ManageDtTool(getApplicationContext());
 			}
 		}.start();
 	}

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.kqsystem_manager"
+    package="edu.sdjzu.manager"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -36,15 +36,26 @@
         </activity>
         <activity
             android:name="edu.sdjzu.manager.LoginAct"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
-        <activity android:name="edu.sdjzu.manager.ManagerIndexAct" >
+        <activity
+            android:name="edu.sdjzu.manager.ManagerIndexAct"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity android:name="edu.sdjzu.manager.TeaJDTBTipAct" >
         </activity>
         <activity android:name="edu.sdjzu.manager.TeaStuOrderAct" >
         </activity>
-        <activity android:name="edu.sdjzu.manager.KQCheckDetailAct" >
+        <activity
+            android:name="edu.sdjzu.manager.KQCheckDetailAct"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="edu.sdjzu.manager.ChatAct"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
         </activity>
 
         <receiver android:name="edu.sdjzu.broadcast.NetErrorReceiver" >
@@ -52,20 +63,26 @@
                 <action android:name="NETWORK_ERROR" />
             </intent-filter>
         </receiver>
-          <receiver android:name="edu.sdjzu.broadcast.NewKqInfoReceiver" >
-            <intent-filter>
+        <receiver android:name="edu.sdjzu.broadcast.NewKqInfoReceiver" >
+            <intent-filter android:priority="799" >
                 <action android:name="com.yc.kq.last.info.action" />
             </intent-filter>
         </receiver>
+        <receiver android:name="edu.sdjzu.broadcast.NewChatInfoReceiver" >
+            <intent-filter android:priority="709" >
+                <action android:name="manage.msg.receiver" />
+            </intent-filter>
+        </receiver>
         <receiver android:name="edu.sdjzu.broadcast.NetWorkChangeBroadCast" >
-            <intent-filter android:priority="799">
+            <intent-filter>
                 <action android:name="NET_SUBMIT_KQ" />
             </intent-filter>
         </receiver>
 
         <service android:name="edu.sdjzu.service.RemoteService" >
             <intent-filter>
-                <action android:name="com.yc.service.backgourond" />
+                <action android:name="com.manager.service.backgourond" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
     </application>
